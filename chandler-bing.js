@@ -7,13 +7,13 @@ const emphasiseWord = (word, color = '#e87085') => {
 }
 
 const mapSentences = mapping => text => {
-  const possibleDelimiters = '.?!'
+  const possibleDelimiters = ',.?!'
   const delimiters = text
     .split('')
     .filter(char => possibleDelimiters.includes(char))
     .map(delimiter => document.createTextNode(delimiter))
     .concat(document.createTextNode(''))
-  const sentences = text.split(/[.?!]/)
+  const sentences = text.split(/[,.?!]/)
   return sentences
     .filter(sentence => sentence)
     .reduce((nodesSoFar, sentence, index) => {
