@@ -16,7 +16,7 @@ const mapSentences = mapping => text => {
   return sentences
     .reduce((nodesSoFar, sentence, index) => {
       const withNewNode = nodesSoFar.concat(mapping(sentence))
-      return index !== sentences.length - 1
+      return delimiters[index]
         ? withNewNode.concat(delimiters[index])
         : withNewNode
     }, [])
