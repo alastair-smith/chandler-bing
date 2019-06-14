@@ -12,14 +12,13 @@ const mapSentences = mapping => text => {
     .split('')
     .filter(char => possibleDelimiters.includes(char))
     .map(delimiter => document.createTextNode(delimiter))
-    .concat(document.createTextNode(''))
-  const sentences = text.split(/[,.?!]/)
+  const sentences = text.split(/[,.?!]/).filter(sentence => sentence)
   return sentences
-    .filter(sentence => sentence)
     .reduce((nodesSoFar, sentence, index) => {
-      return nodesSoFar
-        .concat(mapping(sentence))
-        .concat(delimiters[index])
+      const withNewNode = nodesSoFar.concat(mapping(sentence))
+      return index !== sentences.length - 1
+        ? withNewNode.concat(delimiters[index])
+        : withNewNode
     }, [])
 }
 
@@ -80,9 +79,13 @@ customElements.define('chandler-bing', class extends HTMLElement {
           : [ document.createTextNode(sentence) ]
     )(this.childNodes[0].nodeValue.trim())
 
-    while (this.firstChild) {
-      this.removeChild(this.firstChild)
+    const heWouldSayThatLikeANormalPerson = formattedNodes.length <= 1
+
+    if (!heWouldSayThatLikeANormalPerson) {
+      while (this.firstChild) {
+        this.removeChild(this.firstChild)
+      }
+      formattedNodes.forEach(node => this.appendChild(node))
     }
-    formattedNodes.forEach(node => this.appendChild(node))
   }
 })
