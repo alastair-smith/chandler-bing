@@ -11,10 +11,12 @@
       <script type='module' src='./chandler-bing.js'></script>
     ```
 
-1. Put the text you want converted within the `chandler-bing` tags.
+1. Put the text you want converted within the `chandler-bing` tags, optionally specifying an inflection color
 
     ```html
-    <chandler-bing>Could this be any easier?</chandler-bing>
+    <chandler-bing inflection-color='#e87085'>
+      Could this be any easier?
+    </chandler-bing>
     ```
 
     >Could this _be_ any easier?

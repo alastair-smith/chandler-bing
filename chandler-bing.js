@@ -1,7 +1,7 @@
-const emphasiseWord = (word, color = '#e87085') => {
+const emphasiseWord = (word, color) => {
   const textNode = document.createTextNode(word)
   const italics = document.createElement('i')
-  italics.setAttribute('style', `color:${color};`)
+  if (color) italics.setAttribute('style', `color:${color};`)
   italics.appendChild(textNode)
   return italics
 }
@@ -65,17 +65,18 @@ customElements.define('chandler-bing', class extends HTMLElement {
   }
 
   updateText () {
+    const color = this.getAttribute('inflection-color')
     const formattedNodes = mapSentences(sentence =>
       sentence
         .trim()
         .toLowerCase()
         .startsWith('could')
-        ? replaceBes(sentence, this.color)
+        ? replaceBes(sentence, color)
         : sentence
           .trim()
           .toLowerCase()
           .startsWith('maybe')
-          ? replaceLastWord(sentence, this.color)
+          ? replaceLastWord(sentence, color)
           : [ document.createTextNode(sentence) ]
     )(this.childNodes[0].nodeValue.trim())
 
